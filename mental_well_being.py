@@ -3,7 +3,6 @@ import sqlite3
 
 app = Flask(__name__)
 
-# Initialize SQLite database
 def init_db():
     conn = sqlite3.connect('responses.db')
     cursor = conn.cursor()
@@ -49,5 +48,6 @@ def view_responses():
     return render_template('responses.html', responses=responses)
 
 if __name__ == '__main__':
-    init_db()  # Initialize the database when the app starts
+    init_db()
     app.run(debug=True)
+
