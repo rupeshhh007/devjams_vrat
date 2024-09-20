@@ -1,0 +1,204 @@
+body {
+    font-family: 'Roboto', sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: #f4f4f4;
+    color: #333;
+}
+
+header {
+    background: #007BFF;
+    color: white;
+    padding: 20px 0;
+    text-align: center;
+}
+
+nav ul {
+    list-style-type: none;
+    padding: 0;
+    display: flex;
+    flex-direction: column; /* Mobile view */
+    align-items: center;
+}
+
+nav ul li {
+    margin: 10px 0; /* Adjusted for spacing */
+}
+
+nav ul li a {
+    color: white;
+    text-decoration: none;
+    font-size: 1.2em; /* Increased font size */
+    transition: color 0.3s ease; /* Smooth transition */
+}
+
+nav ul li a:hover {
+    color: #ffc107; /* Change color on hover */
+}
+
+main {
+    padding: 20px;
+    position: relative; /* Added for absolute positioning */
+}
+
+section {
+    background: #fff;
+    padding: 15px;
+    border-radius: 10px;  /* Rounded corners */
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1); /* Subtle shadow */
+    margin-bottom: 20px;
+}
+
+footer {
+    text-align: center;
+    padding: 20px 0;  /* Increased padding */
+    background: #007BFF;
+    color: white;
+    position: relative; /* Change from fixed to relative */
+    width: 100%;
+    bottom: 0;
+}
+
+form {
+    display: flex;
+    flex-direction: column;
+}
+
+form label {
+    margin: 10px 0 5px;
+}
+
+form input, form textarea {
+    padding: 10px;
+    margin-bottom: 10px;
+    border-radius: 5px;  /* Rounded corners */
+    border: 1px solid #ccc; /* Light border */
+}
+
+form button {
+    padding: 10px;
+    background: #007BFF;
+    color: white;
+    border: none;
+    border-radius: 5px;  /* Rounded corners */
+    cursor: pointer;
+    transition: background 0.3s ease; /* Added transition */
+}
+
+form button:hover {
+    background: #0056b3;
+}
+
+/* Heart Animation */
+.heart-container {
+    position: absolute;
+    top: 20px; /* Adjust position */
+    right: 20px; /* Adjust position */
+    text-align: center;
+}
+
+.animated-heart {
+    font-size: 50px;
+    color: red;
+    animation: heartbeat 1.5s infinite;
+}
+
+@keyframes heartbeat {
+    0%, 100% {
+        transform: scale(1);
+    }
+    50% {
+        transform: scale(1.2);
+    }
+}
+
+/* Button Container */
+.button-container {
+    display: flex;
+    justify-content: center;
+    gap: 20px; /* Space between buttons */
+    margin: 20px 0;
+}
+
+.emergency-button {
+    background-color: red; /* Emergency button color */
+    color: white;
+    padding: 15px 30px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background 0.3s ease;
+}
+
+.emergency-button:hover {
+    background-color: darkred; /* Darker on hover */
+}
+
+.help-button {
+    background-color: yellow; /* Help button color */
+    color: black;
+    padding: 15px 30px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background 0.3s ease;
+}
+
+.help-button:hover {
+    background-color: gold; /* Darker on hover */
+}
+
+/* Menu Styles */
+.menu-container {
+    position: relative;
+    display: inline-block;
+    margin-top: 20px; /* Space above the menu */
+}
+
+.menu-button {
+    background-color: #007BFF; /* Customize as needed */
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    font-size: 1.2em;
+    cursor: pointer;
+    transition: background 0.3s ease; /* Smooth transition */
+}
+
+.menu-button:hover {
+    background-color: #0056b3; /* Darker blue on hover */
+}
+
+.menu {
+    display: none; /* Hidden by default */
+    position: absolute;
+    background-color: white; /* Customize as needed */
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+    z-index: 1;
+    min-width: 200px; /* Width of the dropdown */
+}
+
+.menu ul {
+    list-style-type: none;
+    padding: 0;
+    margin: 0;
+}
+
+.menu ul li {
+    padding: 8px 12px;
+}
+
+.menu ul li a {
+    text-decoration: none;
+    color: black; /* Customize as needed */
+}
+
+.menu ul li:hover {
+    background-color: #f1f1f1; /* Background on hover */
+}
+
+@media (max-width: 600px) {
+    header, footer {
+        font-size: 0.8em;
+    }
+}
