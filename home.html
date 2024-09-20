@@ -1,52 +1,103 @@
-from flask import Flask, render_template, request, jsonify
-import sqlite3
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="/static/style.css">
+    <title>Mental Health Awareness</title>
+</head>
+<body>
+    <header>
+        <h1>Welcome to Mental Health Awareness</h1>
+        <nav>
+            <ul>
+                <li><a href="#info" aria-label="About Mental Health"><i class="fas fa-info-circle"></i> About</a></li>
+                <li><a href="#resources" aria-label="Resources for Mental Health"><i class="fas fa-book-open"></i> Resources</a></li>
+                <li><a href="#contact" aria-label="Contact Us"><i class="fas fa-envelope"></i> Contact</a></li>
+                <li><a href="/responses" aria-label="View Responses"><i class="fas fa-eye"></i> View Responses</a></li>
+            </ul>
+        </nav>
+    </header>
 
-app = Flask(__name__)
+    <!-- Menu Button -->
+    <div class="menu-container">
+        <button class="menu-button" onclick="toggleMenu()">Menu</button>
+        <div class="menu" id="menu">
+            <ul>
+                <li><a href="/symptoms.html">Symptoms</a></li>
+                <li><a href="/precautions.html">Precautions</a></li>
+                <li><a href="/healthcare_centres.html">Healthcare Centres</a></li>
+                <li><a href="/what_to_do.html">What to Do</a></li>
+                <li><a href="/what_not_to_do.html">What Not to Do</a></li>
+            </ul>
+        </div>
+    </div>
 
-def init_db():
-    conn = sqlite3.connect('responses.db')
-    cursor = conn.cursor()
-    cursor.execute('''
-        CREATE TABLE IF NOT EXISTS responses (
-            id INTEGER PRIMARY KEY AUTOINCREMENT,
-            name TEXT NOT NULL,
-            email TEXT NOT NULL,
-            message TEXT NOT NULL
-        )
-    ''')
-    conn.commit()
-    conn.close()
+    <main>
+        <section id="info">
+            <h2>About Mental Health</h2>
+            <p>Mental health includes our emotional, psychological, and social well-being. It affects how we think, feel, and act.</p>
+        </section>
+        <section id="resources">
+            <h2>Resources</h2>
+            <p>Here are some helpful resources:</p>
+            <ul>
+                <li><a href="https://www.nami.org" target="_blank">National Alliance on Mental Illness (NAMI)</a></li>
+                <li><a href="https://www.mentalhealth.gov" target="_blank">MentalHealth.gov</a></li>
+                <li><a href="https://www.suicidepreventionlifeline.org" target="_blank">National Suicide Prevention Lifeline</a></li>
+            </ul>
+        </section>
+        <section id="contact">
+            <h2>Contact Us</h2>
+            <form id="contact-form">
+                <label for="name">Name:</label>
+                <input type="text" id="name" required>
+                <label for="email">Email:</label>
+                <input type="email" id="email" required>
+                <label for="message">Message:</label>
+                <textarea id="message" required></textarea>
+                <button type="submit">Send</button>
+            </form>
+        </section>
 
-@app.route('/')
-def home():
-    return render_template('home.html')
+        <div class="heart-container">
+            <i class="fas fa-heart animated-heart"></i>
+        </div>
 
-@app.route('/submit', methods=['POST'])
-def submit():
-    data = request.json
-    name = data['name']
-    email = data['email']
-    message = data['message']
+        <div class="button-container">
+            <button class="emergency-button">Emergency Help</button>
+            <button class="help-button">I Need Help</button>
+        </div>
+    </main>
 
-    # Store data in the database
-    conn = sqlite3.connect('responses.db')
-    cursor = conn.cursor()
-    cursor.execute('INSERT INTO responses (name, email, message) VALUES (?, ?, ?)',
-                   (name, email, message))
-    conn.commit()
-    conn.close()
+    <footer>
+        <p>&copy; 2024 Mental Health Initiative</p>
+    </footer>
+    <script>
+        document.getElementById("contact-form").addEventListener("submit", function(e) {
+            e.preventDefault();
+            const name = document.getElementById("name").value;
+            const email = document.getElementById("email").value;
+            const message = document.getElementById("message").value;
 
-    return jsonify(success=True), 200
-
-@app.route('/responses', methods=['GET'])
-def view_responses():
-    conn = sqlite3.connect('responses.db')
-    cursor = conn.cursor()
-    cursor.execute('SELECT * FROM responses')
-    responses = cursor.fetchall()
-    conn.close()
-    return render_template('responses.html', responses=responses)
-
-if __name__ == '__main__':
-    init_db()
-    app.run(debug=True)
+            fetch('/submit', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({ name, email, message })
+            })
+            .then(response => response.json())
+            .then(data => {
+                if (data.success) {
+                    alert("Response submitted successfully!");
+                    document.getElementById("contact-form").reset(); // Clear the form
+                }
+            })
+            .catch(error => console.error('Error:', error));
+        });
+    </script>
+</body>
+</html>
